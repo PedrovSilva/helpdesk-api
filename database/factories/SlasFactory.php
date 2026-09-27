@@ -1,0 +1,29 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Slas;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Priority;
+
+/**
+ * @extends Factory<Slas>
+ */
+class SlasFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->word(),
+            'priority' => fake()->randomElement([Priority::LOW, Priority::MEDIUM, Priority::HIGH]),
+            'response_time' => fake()->numberBetween(1, 24),
+            'resolution_time' => fake()->numberBetween(1, 72),
+            'is_active' => fake()->boolean(),
+        ];
+    }
+}
