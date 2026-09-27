@@ -1,10 +1,10 @@
 <?php
 
+use App\Enums\Priority;
+use App\Enums\TicketStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\TicketStatus;
-use App\Priority;
 
 return new class extends Migration
 {

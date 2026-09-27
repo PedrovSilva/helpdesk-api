@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Enums\Priority;
+use App\Enums\TicketStatus;
 use App\Models\Categories;
+use App\Models\Category;
 use App\Models\Tickets;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use \App\Models\Category;
-use \App\Models\User;
-use App\TicketStatus;
-use App\Priority;
 
 /**
  * @extends Factory<Tickets>

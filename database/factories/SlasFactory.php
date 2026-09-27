@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enums\Priority;
 use App\Models\Slas;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Priority;
 
 /**
  * @extends Factory<Slas>
