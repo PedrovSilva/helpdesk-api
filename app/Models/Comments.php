@@ -2,11 +2,25 @@
 
 namespace App\Models;
 
+use Database\Factories\CommentsFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[Fillable(['ticket_id', 'user_id', 'body'])]
 class Comments extends Model
 {
-    /** @use HasFactory<\Database\Factories\CommentsFactory> */
+    /** @use HasFactory<CommentsFactory> */
     use HasFactory;
+
+    public function ticket(): BelongsTo
+    {
+        return $this->belongsTo(Tickets::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

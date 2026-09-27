@@ -18,6 +18,7 @@ return new class extends Migration
             $table->uuid('ticket_number')->unique();
             $table->string('title');
             $table->text('description');
+            $table->foreignId('sla_id')->constrained('slas');
             $table->enum('status', TicketStatus::cases())->default(TicketStatus::OPEN);
             $table->enum('priority', Priority::cases())->default(Priority::MEDIUM);
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');

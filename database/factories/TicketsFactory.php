@@ -5,9 +5,9 @@ namespace Database\Factories;
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Models\Categories;
-use App\Models\Category;
 use App\Models\Tickets;
 use App\Models\User;
+use App\Models\Slas;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,6 +26,7 @@ class TicketsFactory extends Factory
             'ticket_number' => fake()->uuid(),
             'title' => fake()->sentence(),
             'description' => fake()->paragraph(),
+            'slas_id' => Slas::factory(),
             'status' => fake()->randomElement(TicketStatus::cases()),
             'priority' => fake()->randomElement(Priority::cases()),
             'category_id' => Categories::factory(),
