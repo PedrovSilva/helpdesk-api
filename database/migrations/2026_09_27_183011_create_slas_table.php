@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Priority;
 
 return new class extends Migration
 {
@@ -11,10 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('slas', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');
+            $table->enum('priority', Priority::cases())->default(Priority::LOW);
+            $table->integer('response_time');
+            $table->integer('resolution_time');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('slas');
     }
 };

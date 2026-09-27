@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->boolean('is_active')->default(true);
+            $table->foreignId('ticket_id')->constrained('tickets')->onDelete('cascade');
+            $table->string('file_path');
+            $table->string('file_name');
+            $table->string('mime_type');
+            $table->unsignedBigInteger('file_size');
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('attachments');
     }
 };
