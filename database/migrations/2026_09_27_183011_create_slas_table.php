@@ -16,8 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->enum('priority', Priority::cases())->default(Priority::LOW);
-            $table->integer('response_time');
-            $table->integer('resolution_time');
+            $table->integer('response_time')->nullable();
+            $table->integer('resolution_time')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
