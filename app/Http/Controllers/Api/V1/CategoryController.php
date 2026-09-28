@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Tickets;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class TicketsController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Tickets::all();
+        //
     }
 
     /**
@@ -34,7 +34,7 @@ class TicketsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tickets $tickets)
+    public function show(Category $categories)
     {
         //
     }
@@ -42,7 +42,7 @@ class TicketsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tickets $tickets)
+    public function edit(Category $categories)
     {
         //
     }
@@ -50,7 +50,7 @@ class TicketsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tickets $tickets)
+    public function update(Request $request, Category $categories)
     {
         //
     }
@@ -58,7 +58,7 @@ class TicketsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tickets $tickets)
+    public function destroy(Category $categories)
     {
         //
     }

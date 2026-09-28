@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\Priority;
+use App\Enums\UserRole;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateSlasRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,10 @@ class UpdateSlasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:120',
-            'priority' => ['required', Rule::Enum(Priority::class)],
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|confirmed|min:8',
+            'user_role' => ['required', Rule::enum(UserRole::class)]
         ];
     }
 }

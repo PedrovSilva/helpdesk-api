@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
 use App\Enums\UserRole;
-use Database\Factories\TicketsFactory;
+use Database\Factories\TicketFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,9 +13,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable(['ticket_number','title', 'description', 'status', 'priority', 'category_id', 'sla_id', 'customer_id'])]
-class Tickets extends Model
+class Ticket extends Model
 {
-    /** @use HasFactory<TicketsFactory> */
+    /** @use HasFactory<TicketFactory> */
     use HasFactory;
     protected function casts(): array
     {
@@ -30,16 +30,16 @@ class Tickets extends Model
 
     public function slas(): BelongsTo
     {
-        return $this->belongsTo(Slas::class);
+        return $this->belongsTo(Sla::class);
     }
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Categories::class);
+        return $this->belongsTo(Category::class);
     }
     public function history(): HasMany
     {
-        return $this->hasMany(TicketHistories::class);
+        return $this->hasMany(TicketHistory::class);
     }
     public function customer(): BelongsTo
     {
@@ -53,11 +53,11 @@ class Tickets extends Model
 
     public function comments(): HasMany
     {
-        return $this->hasMany(Comments::class);
+        return $this->hasMany(Comment::class);
     }
 
     public function attachments(): HasMany
     {
-        return $this->hasMany(Attachments::class);
+        return $this->hasMany(Attachment::class);
     }
 }

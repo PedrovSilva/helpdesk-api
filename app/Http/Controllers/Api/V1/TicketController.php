@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Ticket_histories;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 
-class TicketHistoriesController extends Controller
+class TicketController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Ticket::all();
     }
 
     /**
@@ -34,7 +34,7 @@ class TicketHistoriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Ticket_histories $ticket_histories)
+    public function show(Ticket $tickets)
     {
         //
     }
@@ -42,7 +42,7 @@ class TicketHistoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Ticket_histories $ticket_histories)
+    public function edit(Ticket $tickets)
     {
         //
     }
@@ -50,7 +50,7 @@ class TicketHistoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ticket_histories $ticket_histories)
+    public function update(Request $request, Ticket $tickets)
     {
         //
     }
@@ -58,7 +58,7 @@ class TicketHistoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ticket_histories $ticket_histories)
+    public function destroy(Ticket $tickets)
     {
         //
     }

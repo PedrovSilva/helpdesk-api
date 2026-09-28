@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Comments;
-use App\Models\Tickets;
-use App\Models\User;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
+
 /**
- * @extends Factory<Comments>
+ * @extends Factory<Category>
  */
-class CommentsFactory extends Factory
+class CategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,9 +18,9 @@ class CommentsFactory extends Factory
     public function definition(): array
     {
         return [
-            'ticket_id' => Tickets::factory(),
-            'user_id' => User::factory(),
-            'body' => fake()->paragraph(),
+            'name' => fake()->word(),
+            'slug' => fake()->slug(),
+            'is_active' => fake()->boolean(),
         ];
     }
 }

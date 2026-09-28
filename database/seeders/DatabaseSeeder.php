@@ -16,36 +16,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+            User::factory()
+                ->admin()
+                ->create([
+                    'name' => 'System Administrator',
+                    'email' => 'admin@helpdesk.test',
+                ]);
 
-        User::factory()->create([
-            'name' => 'test employee',
-            'email' => 'test.employee@example.com',
-            'password'=> bcrypt('123456'),
-            'user_role' => UserRole::AGENT,
-        ]);
+            User::factory()
+                ->agent()
+                ->create([
+                    'name' => 'Support Agent',
+                    'email' => 'agent@helpdesk.test',
+                ]);
 
-         User::factory()->create([
-            'name' => 'test customer',
-            'email' => 'test.customer@example.com',
-            'password'=> bcrypt('123456'),
-            'user_role' => UserRole::COSTUMER,
-        ]);
-
-        User::factory()->create([
-            'name' => 'test admin',
-            'email' => 'test.admin@example.com',
-            'password'=> bcrypt('123456'),
-            'user_role' => UserRole::ADMIN,
-        ]);
+            User::factory()
+                ->customer()
+                ->create([
+                    'name' => 'Customer',
+                    'email' => 'customer@helpdesk.test',
+                ]);
 
         $this->call([
-            CategoriesSeeder::class,
-            TicketsSeeder::class,
-            AttachmentsSeeder::class,
-            CommentsSeeder::class,
-            SlasSeeder::class,
-            TicketHistoriesSeeder::class,
+            CategorySeeder::class,
+            TicketSeeder::class,
+            AttachmentSeeder::class,
+            CommentSeeder::class,
+            SlaSeeder::class,
+            TicketHistorySeeder::class,
         ]);
     }
 }

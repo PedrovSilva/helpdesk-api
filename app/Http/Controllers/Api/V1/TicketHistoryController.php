@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Slas;
+use App\Models\Ticket_histories;
 use Illuminate\Http\Request;
 
-class SlasController extends Controller
+class TicketHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class SlasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Slas $slas)
+    public function show(Ticket_histories $ticket_histories)
     {
         //
     }
@@ -42,7 +42,7 @@ class SlasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Slas $slas)
+    public function edit(Ticket_histories $ticket_histories)
     {
         //
     }
@@ -50,7 +50,7 @@ class SlasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Slas $slas)
+    public function update(Request $request, Ticket_histories $ticket_histories)
     {
         //
     }
@@ -58,7 +58,7 @@ class SlasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Slas $slas)
+    public function destroy(Ticket_histories $ticket_histories)
     {
         //
     }

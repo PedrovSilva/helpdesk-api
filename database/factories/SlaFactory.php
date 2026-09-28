@@ -2,13 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\Categories;
+use App\Enums\Priority;
+use App\Models\Sla;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Categories>
+ * @extends Factory<Sla>
  */
-class CategoriesFactory extends Factory
+class SlaFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +20,9 @@ class CategoriesFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            'slug' => fake()->slug(),
+            'priority' => fake()->randomElement([Priority::LOW, Priority::MEDIUM, Priority::HIGH]),
+            'response_time' => fake()->numberBetween(1, 24),
+            'resolution_time' => fake()->numberBetween(1, 72),
             'is_active' => fake()->boolean(),
         ];
     }

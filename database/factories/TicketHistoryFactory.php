@@ -3,14 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\Ticket_histories;
-use App\Models\Tickets;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends Factory<Ticket_histories>
  */
-class TicketHistoriesFactory extends Factory
+class TicketHistoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,7 +20,7 @@ class TicketHistoriesFactory extends Factory
     public function definition(): array
     {
         return [
-            'ticket_id' => Tickets::factory(),
+            'ticket_id' => Ticket::factory(),
             'user_id' => User::factory(),
             'event' => fake()->word(),
             'from_value' => fake()->word(),

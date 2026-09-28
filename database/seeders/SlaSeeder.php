@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Categories;
+use App\Models\Sla;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CategoriesSeeder extends Seeder
+class SlaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Categories::factory(20)->create();
+        Sla::factory(10)->create();
     }
 }

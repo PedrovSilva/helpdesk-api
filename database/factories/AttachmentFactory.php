@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Attachments;
+use App\Models\Attachment;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Tickets;
+use App\Models\Ticket;
 /**
- * @extends Factory<Attachments>
+ * @extends Factory<Attachment>
  */
-class AttachmentsFactory extends Factory
+class AttachmentFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class AttachmentsFactory extends Factory
     public function definition(): array
     {
         return [
-            'ticket_id' => Tickets::factory(),
+            'ticket_id' => Ticket::factory(),
             'file_path' => fake()->word() . '.pdf',
             'file_name' => fake()->word() . '.pdf',
             'mime_type' => 'application/pdf',

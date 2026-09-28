@@ -4,16 +4,16 @@ namespace Database\Factories;
 
 use App\Enums\Priority;
 use App\Enums\TicketStatus;
-use App\Models\Categories;
-use App\Models\Tickets;
+use App\Models\Category;
+use App\Models\Ticket;
 use App\Models\User;
-use App\Models\Slas;
+use App\Models\Sla;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Tickets>
+ * @extends Factory<Ticket>
  */
-class TicketsFactory extends Factory
+class TicketFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -26,10 +26,10 @@ class TicketsFactory extends Factory
             'ticket_number' => fake()->uuid(),
             'title' => fake()->sentence(),
             'description' => fake()->paragraph(),
-            'sla_id' => Slas::factory(),
+            'sla_id' => Sla::factory(),
             'status' => fake()->randomElement(TicketStatus::cases()),
             'priority' => fake()->randomElement(Priority::cases()),
-            'category_id' => Categories::factory(),
+            'category_id' => Category::factory(),
             'customer_id' => User::factory(),
             'assigned_to' => User::factory(),
             'sla_due_date' => fake()->dateTimeBetween('+1 days', '+7 days'),
