@@ -26,7 +26,7 @@ class TicketsFactory extends Factory
             'ticket_number' => fake()->uuid(),
             'title' => fake()->sentence(),
             'description' => fake()->paragraph(),
-            'slas_id' => Slas::factory(),
+            'sla_id' => Slas::factory(),
             'status' => fake()->randomElement(TicketStatus::cases()),
             'priority' => fake()->randomElement(Priority::cases()),
             'category_id' => Categories::factory(),
