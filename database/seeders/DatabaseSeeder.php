@@ -39,11 +39,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CategorySeeder::class,
-            TicketSeeder::class,
-            AttachmentSeeder::class,
-            CommentSeeder::class,
+        //    TicketSeeder::class,
+         //   AttachmentSeeder::class,
+        //    CommentSeeder::class,
             SlaSeeder::class,
-            TicketHistorySeeder::class,
+         //   TicketHistorySeeder::class,
         ]);
     }
 }

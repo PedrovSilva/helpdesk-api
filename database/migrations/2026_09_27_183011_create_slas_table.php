@@ -7,25 +7,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('slas', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->enum('priority', Priority::cases())->default(Priority::LOW);
-            $table->integer('response_time')->nullable();
-            $table->integer('resolution_time')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->uuid('uuid')->unique();
+
+            $table->string('name', 100)->unique();
+
+            $table->string('priority', 20)->unique();
+
+            $table->unsignedInteger('response_time_minutes');
+            $table->unsignedInteger('resolution_time_minutes');
+
+            $table->boolean('active')->default(true);
+
             $table->timestamps();
+
+            $table->index('priority');
+            $table->index('active');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('slas');
