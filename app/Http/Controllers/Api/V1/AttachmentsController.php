@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Slas;
+use App\Models\Attachments;
 use Illuminate\Http\Request;
 
-class SlasController extends Controller
+class AttachmentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class SlasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Slas $slas)
+    public function show(Attachments $attachments)
     {
         //
     }
@@ -42,7 +42,7 @@ class SlasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Slas $slas)
+    public function edit(Attachments $attachments)
     {
         //
     }
@@ -50,7 +50,7 @@ class SlasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Slas $slas)
+    public function update(Request $request, Attachments $attachments)
     {
         //
     }
@@ -58,7 +58,7 @@ class SlasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Slas $slas)
+    public function destroy(Attachments $attachments)
     {
         //
     }

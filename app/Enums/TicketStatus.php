@@ -6,6 +6,10 @@ enum TicketStatus: string
 {
     case OPEN = 'open';
     case IN_PROGRESS = 'in_progress';
+
+    case WAITING_CUSTOMER = 'waiting_customer';
+
+    case RESOLVED = 'resolved';
     case CLOSED = 'closed';
 
 }
