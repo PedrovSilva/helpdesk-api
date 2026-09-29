@@ -13,4 +13,5 @@ Route::prefix('api/v1')
         Route::apiResource('users', UserController::class);
         Route::apiResource('categories', CategoryController::class);
         Route::apiResource('slas', SlaController::class);
+        Route::apiResource('tickets', TicketController::class);
     });

@@ -2,64 +2,55 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Requests\StoreTicketRequest;
+use App\Http\Requests\UpdateTicketRequest;
+use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
-use Illuminate\Http\Request;
+use App\Services\TicketService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TicketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(public TicketService $ticketService) {}
+
+    public function index(): AnonymousResourceCollection
     {
-        return Ticket::all();
+        $tickets = Ticket::query()
+            ->latest()
+            ->paginate(15);
+
+        return TicketResource::collection($tickets);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreTicketRequest $request): TicketResource
     {
-        //
+        $ticket = $this->ticketService->create($request->validated());
+
+        return new TicketResource($ticket);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function show(Ticket $ticket): TicketResource
     {
-        //
+        return new TicketResource($ticket);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Ticket $tickets)
-    {
-        //
+    public function update(
+        UpdateTicketRequest $request,
+        Ticket $ticket
+    ): TicketResource {
+        $ticket = $this->ticketService->update(
+            $ticket,
+            $request->validated()
+        );
+
+        return new TicketResource($ticket);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ticket $tickets)
+    public function destroy(Ticket $ticket): JsonResponse
     {
-        //
-    }
+        $ticket->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Ticket $tickets)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Ticket $tickets)
-    {
-        //
+        return response()->json(null, 204);
     }
 }

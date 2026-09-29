@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,34 +15,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-            User::factory()
-                ->admin()
-                ->create([
-                    'name' => 'System Administrator',
-                    'email' => 'admin@helpdesk.test',
-                ]);
+        User::factory()
+            ->admin()
+            ->create([
+                'name' => 'System Administrator',
+                'email' => 'admin@helpdesk.test',
+            ]);
 
-            User::factory()
-                ->agent()
-                ->create([
-                    'name' => 'Support Agent',
-                    'email' => 'agent@helpdesk.test',
-                ]);
+        User::factory()
+            ->agent()
+            ->create([
+                'name' => 'Support Agent',
+                'email' => 'agent@helpdesk.test',
+            ]);
 
-            User::factory()
-                ->customer()
-                ->create([
-                    'name' => 'Customer',
-                    'email' => 'customer@helpdesk.test',
-                ]);
+        User::factory()
+            ->customer()
+            ->create([
+                'name' => 'Customer',
+                'email' => 'customer@helpdesk.test',
+            ]);
 
         $this->call([
             CategorySeeder::class,
-        //    TicketSeeder::class,
-         //   AttachmentSeeder::class,
-        //    CommentSeeder::class,
             SlaSeeder::class,
-         //   TicketHistorySeeder::class,
+            TicketSeeder::class,
         ]);
     }
 }

@@ -11,12 +11,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
-#[Fillable(['ticket_number','title', 'description', 'status', 'priority', 'category_id', 'sla_id', 'customer_id'])]
+#[Fillable(['ticket_number', 'title', 'description', 'status', 'priority', 'category_id', 'sla_id', 'customer_id', 'assigned_to', 'sla_due_date', 'resolved_at', 'closed_at'])]
 class Ticket extends Model
 {
     /** @use HasFactory<TicketFactory> */
     use HasFactory;
+
     protected function casts(): array
     {
         return [
@@ -28,7 +30,14 @@ class Ticket extends Model
         ];
     }
 
-    public function slas(): BelongsTo
+    protected static function booted(): void
+    {
+        static::creating(function (Ticket $ticket) {
+            $ticket->ticket_number ??= (string) Str::uuid();
+        });
+    }
+
+    public function sla(): BelongsTo
     {
         return $this->belongsTo(Sla::class);
     }
@@ -37,13 +46,15 @@ class Ticket extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
     public function history(): HasMany
     {
         return $this->hasMany(TicketHistory::class);
     }
+
     public function customer(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'customer_id')->where('user_role', UserRole::COSTUMER);
+        return $this->belongsTo(User::class, 'customer_id')->where('user_role', UserRole::CUSTOMER);
     }
 
     public function assignee(): BelongsTo

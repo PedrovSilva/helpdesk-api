@@ -2,28 +2,59 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
+use App\Enums\Priority;
+use App\Enums\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreTicketRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, mixed>
      */
     public function rules(): array
     {
         return [
-            //
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'description' => [
+                'required',
+                'string',
+            ],
+            'priority' => [
+                'sometimes',
+                Rule::enum(Priority::class),
+            ],
+            'category_id' => [
+                'required',
+                'integer',
+                'exists:categories,id',
+            ],
+            'customer_id' => [
+                'required',
+                'integer',
+                Rule::exists('users', 'id')->where(
+                    'user_role',
+                    UserRole::CUSTOMER->value
+                ),
+            ],
+            'assigned_to' => [
+                'sometimes',
+                'nullable',
+                'integer',
+                Rule::exists('users', 'id')->where(
+                    'user_role',
+                    UserRole::AGENT->value
+                ),
+            ],
         ];
     }
 }
