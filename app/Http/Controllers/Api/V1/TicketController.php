@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Requests\IndexTicketRequest;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
 use App\Http\Resources\TicketResource;
@@ -14,9 +15,10 @@ class TicketController extends Controller
 {
     public function __construct(public TicketService $ticketService) {}
 
-    public function index(): AnonymousResourceCollection
+    public function index(IndexTicketRequest $request): AnonymousResourceCollection
     {
         $tickets = Ticket::query()
+            ->filtered($request->validated())
             ->latest()
             ->paginate(15);
 

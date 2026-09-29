@@ -25,6 +25,137 @@ class TicketTest extends TestCase
             ->assertJsonCount(3, 'data');
     }
 
+    public function test_can_filter_tickets_by_status(): void
+    {
+        Ticket::factory()->create();
+        $inProgress = Ticket::factory()->inProgress()->create();
+
+        $this->getJson('/api/v1/tickets?status=in_progress')
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $inProgress->id);
+    }
+
+    public function test_can_filter_tickets_by_priority(): void
+    {
+        Ticket::factory()->create();
+        $high = Ticket::factory()->high()->create();
+
+        $this->getJson('/api/v1/tickets?priority=high')
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $high->id);
+    }
+
+    public function test_can_filter_tickets_by_category_id(): void
+    {
+        $category = Category::factory()->create();
+        Ticket::factory()->create();
+        $ticket = Ticket::factory()->create([
+            'category_id' => $category->id,
+        ]);
+
+        $this->getJson("/api/v1/tickets?category_id={$category->id}")
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $ticket->id);
+    }
+
+    public function test_can_filter_tickets_by_customer_id(): void
+    {
+        $customer = User::factory()->customer()->create();
+        Ticket::factory()->create();
+        $ticket = Ticket::factory()->create([
+            'customer_id' => $customer->id,
+        ]);
+
+        $this->getJson("/api/v1/tickets?customer_id={$customer->id}")
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $ticket->id);
+    }
+
+    public function test_can_filter_tickets_by_assigned_to(): void
+    {
+        $agent = User::factory()->agent()->create();
+        Ticket::factory()->create();
+        $ticket = Ticket::factory()->inProgress()->create([
+            'assigned_to' => $agent->id,
+        ]);
+
+        $this->getJson("/api/v1/tickets?assigned_to={$agent->id}")
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $ticket->id);
+    }
+
+    public function test_can_filter_tickets_by_sla_id(): void
+    {
+        $mediumSla = Sla::factory()->medium()->create();
+        $highSla = Sla::factory()->high()->create();
+
+        Ticket::factory()->create([
+            'sla_id' => $mediumSla->id,
+        ]);
+        $ticket = Ticket::factory()->high()->create([
+            'sla_id' => $highSla->id,
+        ]);
+
+        $this->getJson("/api/v1/tickets?sla_id={$highSla->id}")
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $ticket->id);
+    }
+
+    public function test_can_combine_ticket_filters(): void
+    {
+        $category = Category::factory()->create();
+        Ticket::factory()->inProgress()->create();
+        Ticket::factory()->create([
+            'category_id' => $category->id,
+        ]);
+        $ticket = Ticket::factory()->inProgress()->create([
+            'category_id' => $category->id,
+        ]);
+
+        $this->getJson("/api/v1/tickets?status=in_progress&category_id={$category->id}")
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $ticket->id);
+    }
+
+    public function test_ticket_filters_must_be_valid(): void
+    {
+        $this->getJson('/api/v1/tickets?status=urgent&priority=urgent&category_id=999999&customer_id=999999&assigned_to=999999&sla_id=999999')
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors([
+                'status',
+                'priority',
+                'category_id',
+                'customer_id',
+                'assigned_to',
+                'sla_id',
+            ]);
+    }
+
+    public function test_assigned_to_filter_must_be_an_agent(): void
+    {
+        $customer = User::factory()->customer()->create();
+
+        $this->getJson("/api/v1/tickets?assigned_to={$customer->id}")
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('assigned_to');
+    }
+
+    public function test_customer_id_filter_must_be_a_customer(): void
+    {
+        $agent = User::factory()->agent()->create();
+
+        $this->getJson("/api/v1/tickets?customer_id={$agent->id}")
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('customer_id');
+    }
+
     public function test_can_view_ticket(): void
     {
         $ticket = Ticket::factory()->create();
