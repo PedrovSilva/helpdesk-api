@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\CommentController;
 use App\Http\Controllers\Api\V1\SlaController;
 use App\Http\Controllers\Api\V1\TicketController;
+use App\Http\Controllers\Api\V1\TicketHistoryController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,5 @@ Route::prefix('api/v1')
         Route::apiResource('tickets', TicketController::class);
         Route::apiResource('comments', CommentController::class);
         Route::apiResource('attachments', AttachmentController::class);
+        Route::apiResource('ticket-histories', TicketHistoryController::class);
     });

@@ -2,64 +2,49 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Ticket_histories;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreTicketHistoryRequest;
+use App\Http\Requests\UpdateTicketHistoryRequest;
+use App\Http\Resources\TicketHistoryResource;
+use App\Models\TicketHistory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TicketHistoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        //
+        $ticketHistories = TicketHistory::query()
+            ->latest()
+            ->paginate(15);
+
+        return TicketHistoryResource::collection($ticketHistories);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreTicketHistoryRequest $request): TicketHistoryResource
     {
-        //
+        $ticketHistory = TicketHistory::create($request->validated());
+
+        return new TicketHistoryResource($ticketHistory);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function show(TicketHistory $ticketHistory): TicketHistoryResource
     {
-        //
+        return new TicketHistoryResource($ticketHistory);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Ticket_histories $ticket_histories)
-    {
-        //
+    public function update(
+        UpdateTicketHistoryRequest $request,
+        TicketHistory $ticketHistory
+    ): TicketHistoryResource {
+        $ticketHistory->update($request->validated());
+
+        return new TicketHistoryResource($ticketHistory->refresh());
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ticket_histories $ticket_histories)
+    public function destroy(TicketHistory $ticketHistory): JsonResponse
     {
-        //
-    }
+        $ticketHistory->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Ticket_histories $ticket_histories)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Ticket_histories $ticket_histories)
-    {
-        //
+        return response()->json(null, 204);
     }
 }

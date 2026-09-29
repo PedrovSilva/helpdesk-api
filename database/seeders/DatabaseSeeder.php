@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             TicketSeeder::class,
             CommentSeeder::class,
             AttachmentSeeder::class,
+            TicketHistorySeeder::class,
         ]);
     }
 }
