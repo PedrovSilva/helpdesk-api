@@ -23,5 +23,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(User::class, UserPolicy::class);
+
+        Gate::define('viewApiDocs', function (?User $user = null): bool {
+            return $this->app->environment('testing');
+        });
     }
 }
