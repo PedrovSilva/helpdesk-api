@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             SlaSeeder::class,
             TicketSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }

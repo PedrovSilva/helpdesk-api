@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\CommentController;
 use App\Http\Controllers\Api\V1\SlaController;
 use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\UserController;
@@ -14,4 +15,5 @@ Route::prefix('api/v1')
         Route::apiResource('categories', CategoryController::class);
         Route::apiResource('slas', SlaController::class);
         Route::apiResource('tickets', TicketController::class);
+        Route::apiResource('comments', CommentController::class);
     });
