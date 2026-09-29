@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AttachmentController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\CommentController;
 use App\Http\Controllers\Api\V1\SlaController;
@@ -16,4 +17,5 @@ Route::prefix('api/v1')
         Route::apiResource('slas', SlaController::class);
         Route::apiResource('tickets', TicketController::class);
         Route::apiResource('comments', CommentController::class);
+        Route::apiResource('attachments', AttachmentController::class);
     });

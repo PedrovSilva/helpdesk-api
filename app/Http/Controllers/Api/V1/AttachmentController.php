@@ -2,64 +2,49 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Requests\StoreAttachmentRequest;
+use App\Http\Requests\UpdateAttachmentRequest;
+use App\Http\Resources\AttachmentResource;
 use App\Models\Attachment;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AttachmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        //
+        $attachments = Attachment::query()
+            ->latest()
+            ->paginate(15);
+
+        return AttachmentResource::collection($attachments);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreAttachmentRequest $request): AttachmentResource
     {
-        //
+        $attachment = Attachment::create($request->validated());
+
+        return new AttachmentResource($attachment);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function show(Attachment $attachment): AttachmentResource
     {
-        //
+        return new AttachmentResource($attachment);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Attachment $attachments)
-    {
-        //
+    public function update(
+        UpdateAttachmentRequest $request,
+        Attachment $attachment
+    ): AttachmentResource {
+        $attachment->update($request->validated());
+
+        return new AttachmentResource($attachment->refresh());
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Attachment $attachments)
+    public function destroy(Attachment $attachment): JsonResponse
     {
-        //
-    }
+        $attachment->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Attachment $attachments)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Attachment $attachments)
-    {
-        //
+        return response()->json(null, 204);
     }
 }

@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             SlaSeeder::class,
             TicketSeeder::class,
             CommentSeeder::class,
+            AttachmentSeeder::class,
         ]);
     }
 }
